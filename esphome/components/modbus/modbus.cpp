@@ -40,6 +40,31 @@ uint16_t crc16(const uint8_t *data, uint8_t len) {
   return crc;
 }
 
+/// CUSTOM
+unsigned int calculateCRC(uint8_t *frame, uint8_t bufferSize)
+{
+  uint16_t temp = 0xFFFF;
+  bool flag;
+
+  for (uint8_t i = 0; i < bufferSize; i++)
+  {
+    temp = temp ^ frame[i];
+    for (uint8_t j = 1; j <= 8; j++)
+    {
+      flag = temp & 0x0001;
+      temp >>= 1;
+      if (flag)
+      {
+        temp ^= 0xA001;
+      }
+    }
+  }
+
+  return temp;
+}
+
+// CUSTOM
+
 bool Modbus::parse_modbus_byte_(uint8_t byte) {
   size_t at = this->rx_buffer_.size();
   this->rx_buffer_.push_back(byte);
@@ -123,7 +148,7 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   frame[3] = index;
   frame[4] = page;
   frame[5] = count;
-  uint16_t crc = crc16(frame, 6);
+  uint16_t crc = calculateCRC(frame, 6);
   frame[6] = crc & 0xFF;
   frame[7] = crc >> 8;
   ESP_LOGD(TAG,"address: 0x%02X",frame[0]);
