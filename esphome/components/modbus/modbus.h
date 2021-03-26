@@ -21,6 +21,7 @@ class Modbus : public uart::UARTDevice, public Component {
   float get_setup_priority() const override;
 
   void send(uint8_t address, uint8_t function, uint16_t start_address, uint16_t register_count);
+  void send(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count);
 
  protected:
   bool parse_modbus_byte_(uint8_t byte);
@@ -39,6 +40,10 @@ class ModbusDevice {
   void send(uint8_t function, uint16_t start_address, uint16_t register_count) {
     this->parent_->send(this->address_, function, start_address, register_count);
   }
+
+  void send(uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
+    this->parent_->send(this->address_, function, category, page, index, count);
+  }  
 
  protected:
   friend Modbus;
