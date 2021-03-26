@@ -114,7 +114,13 @@ void Modbus::send(uint8_t address, uint8_t function, uint16_t start_address, uin
 
   this->write_array(frame, 8);
 }
-void Modbus::sendWavin(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
+void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
+  ESP_LOGD(TAG,"address: 0x%02X",address);
+  ESP_LOGD(TAG,"function: %02X",function);
+  ESP_LOGD(TAG,"category: %02X",category);
+  ESP_LOGD(TAG,"page: %02X",page);
+  ESP_LOGD(TAG,"index: %02X",index);
+  ESP_LOGD(TAG,"count: %02X",count);
   uint8_t frame[8];
   frame[0] = address;
   frame[1] = function;
