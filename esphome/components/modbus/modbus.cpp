@@ -79,6 +79,7 @@ bool Modbus::parse_modbus_byte_(uint8_t byte) {
 
   bool found = false;
   for (auto *device : this->devices_) {
+    ESP_LOGD(TAG,"ModbusData: %s", hexencode(data).c_str());
     if (device->address_ == address) {
       device->on_modbus_data(data);
       found = true;
@@ -128,8 +129,8 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   frame[3] = index;
   frame[4] = page;
   frame[5] = count;
-  auto crc = crc16(frame, 6);
-  frame[6] = crc >> 0;
+  uint16_t crc = crc16(frame, 8);
+  frame[6] = crc & 0xFF;
   frame[7] = crc >> 8;
 
   this->write_array(frame, 8);
