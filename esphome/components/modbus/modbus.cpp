@@ -114,6 +114,20 @@ void Modbus::send(uint8_t address, uint8_t function, uint16_t start_address, uin
 
   this->write_array(frame, 8);
 }
+void Modbus::sendWavin(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
+  uint8_t frame[8];
+  frame[0] = address;
+  frame[1] = function;
+  frame[2] = category;
+  frame[3] = index;
+  frame[4] = page;
+  frame[5] = count;
+  auto crc = crc16(frame, 6);
+  frame[6] = crc >> 0;
+  frame[7] = crc >> 8;
+
+  this->write_array(frame, 8);
+}
 
 }  // namespace modbus
 }  // namespace esphome
