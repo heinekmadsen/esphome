@@ -44,7 +44,7 @@ class ModbusDevice {
   void send(uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
     this->parent_->send(this->address_, function, category, page, index, count);
   }  
-
+  unsigned int calculateCRC(unsigned char *frame, unsigned char bufferSize);
  protected:
   friend Modbus;
 
