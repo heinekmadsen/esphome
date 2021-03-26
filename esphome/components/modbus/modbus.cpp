@@ -59,7 +59,7 @@ unsigned int calculateCRC(uint8_t *frame, uint8_t bufferSize)
       }
     }
   }
-
+  
   return temp;
 }
 
@@ -148,7 +148,7 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   frame[4] = page;
   frame[5] = count;
   uint16_t crc = calculateCRC(frame, 6);
-  frame[6] = crc & 0xFF;
+  frame[6] = crc;
   frame[7] = crc >> 8;
   ESP_LOGD(TAG,"address: 0x%02X",frame[0]);
   ESP_LOGD(TAG,"function: %02X",frame[1]);
@@ -158,7 +158,6 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   ESP_LOGD(TAG,"count: %02X",frame[5]);
   ESP_LOGD(TAG,"crc: %02X",frame[6]);
   ESP_LOGD(TAG,"crc: %02X",frame[7]);
-  ESP_LOGD(TAG,"frame: %02X",frame);
   this->write_array(frame, 8);
 }
 
