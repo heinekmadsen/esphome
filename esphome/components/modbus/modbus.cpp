@@ -158,6 +158,7 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   ESP_LOGD(TAG,"count: %02X",frame[5]);
   ESP_LOGD(TAG,"crc: %02X",frame[6]);
   ESP_LOGD(TAG,"crc: %02X",frame[7]);
+  ESP_LOGD(TAG,"frame: %02X",frame);
   this->write_array(frame, 8);
 }
 
