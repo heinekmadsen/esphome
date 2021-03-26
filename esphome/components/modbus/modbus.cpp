@@ -79,7 +79,6 @@ bool Modbus::parse_modbus_byte_(uint8_t byte) {
 
   bool found = false;
   for (auto *device : this->devices_) {
-    ESP_LOGD(TAG,"ModbusData: %s", hexencode(data).c_str());
     if (device->address_ == address) {
       device->on_modbus_data(data);
       found = true;
