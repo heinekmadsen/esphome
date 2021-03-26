@@ -148,8 +148,8 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   frame[4] = page;
   frame[5] = count;
   auto crc = crc16(frame, 6);
-  frame[6] = crc >> 0;
-  frame[7] = crc >> 8;
+  frame[6] = 0x85;
+  frame[7] = 0x1D;
   ESP_LOGD(TAG,"address: 0x%02X",frame[0]);
   ESP_LOGD(TAG,"function: %02X",frame[1]);
   ESP_LOGD(TAG,"category: %02X",frame[2]);
