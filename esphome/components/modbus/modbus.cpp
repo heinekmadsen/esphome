@@ -128,10 +128,17 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   frame[3] = index;
   frame[4] = page;
   frame[5] = count;
-  uint16_t crc = crc16(frame, 8);
+  uint16_t crc = crc16(frame, 6);
   frame[6] = crc & 0xFF;
   frame[7] = crc >> 8;
-
+  ESP_LOGD(TAG,"address: 0x%02X",frame[0]);
+  ESP_LOGD(TAG,"function: %02X",frame[1]);
+  ESP_LOGD(TAG,"category: %02X",frame[2]);
+  ESP_LOGD(TAG,"page: %02X",frame[3]);
+  ESP_LOGD(TAG,"index: %02X",frame[4]);
+  ESP_LOGD(TAG,"count: %02X",frame[5]);
+  ESP_LOGD(TAG,"crc: %02X",frame[6]);
+  ESP_LOGD(TAG,"crc: %02X",frame[7]);
   this->write_array(frame, 8);
 }
 
