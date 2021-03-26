@@ -139,10 +139,9 @@ void Modbus::send(uint8_t address, uint8_t function, uint16_t start_address, uin
 
   this->write_array(frame, 8);
 }
-void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) {
-  uint8_t addresstemp = 1; 
+void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t page, uint8_t index, uint8_t count) { 
   uint8_t frame[8];
-  frame[0] = addresstemp;
+  frame[0] = address;
   frame[1] = function;
   frame[2] = category;
   frame[3] = index;
