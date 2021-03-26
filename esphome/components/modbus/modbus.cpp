@@ -154,7 +154,7 @@ void Modbus::send(uint8_t address, uint8_t function, uint8_t category, uint8_t p
   ESP_LOGD(TAG,"function: %02X",frame[1]);
   ESP_LOGD(TAG,"category: %02X",frame[2]);
   ESP_LOGD(TAG,"index: %02X",frame[3]);
-  ESP_LOGD(TAG,"page: %02X",frame[4]);
+  ESP_LOGD(TAG,"page/channel: %02X",frame[4]);
   ESP_LOGD(TAG,"count: %02X",frame[5]);
   ESP_LOGD(TAG,"crc: %02X",frame[6]);
   ESP_LOGD(TAG,"crc: %02X",frame[7]);
