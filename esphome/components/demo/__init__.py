@@ -132,8 +132,12 @@ CONFIG_SCHEMA = cv.Schema(
                 },
             ],
         ): [
-            binary_sensor.binary_sensor_schema(DemoBinarySensor).extend(
+            binary_sensor.BINARY_SENSOR_SCHEMA.extend(
                 cv.polling_component_schema("60s")
+            ).extend(
+                {
+                    cv.GenerateID(): cv.declare_id(DemoBinarySensor),
+                }
             )
         ],
         cv.Optional(
@@ -368,7 +372,7 @@ CONFIG_SCHEMA = cv.Schema(
                 },
             ],
         ): [
-            text_sensor.text_sensor_schema(DemoTextSensor).extend(
+            text_sensor.text_sensor_schema(klass=DemoTextSensor).extend(
                 cv.polling_component_schema("60s")
             )
         ],
@@ -378,8 +382,9 @@ CONFIG_SCHEMA = cv.Schema(
 
 async def to_code(config):
     for conf in config[CONF_BINARY_SENSORS]:
-        var = await binary_sensor.new_binary_sensor(conf)
+        var = cg.new_Pvariable(conf[CONF_ID])
         await cg.register_component(var, conf)
+        await binary_sensor.register_binary_sensor(var, conf)
 
     for conf in config[CONF_CLIMATES]:
         var = cg.new_Pvariable(conf[CONF_ID])
