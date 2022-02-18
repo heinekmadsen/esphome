@@ -165,7 +165,7 @@ def declare_protocol(name):
 
 
 BINARY_SENSOR_REGISTRY = Registry(
-    binary_sensor.binary_sensor_schema().extend(
+    binary_sensor.BINARY_SENSOR_SCHEMA.extend(
         {
             cv.GenerateID(CONF_RECEIVER_ID): cv.use_id(RemoteReceiverBase),
         }
